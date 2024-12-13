@@ -1,5 +1,5 @@
 dup:
-	docker-compose up --build
+	docker-compose up --build -d
 
 dwn:
 	docker-compose down

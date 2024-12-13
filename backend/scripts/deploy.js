@@ -11,10 +11,10 @@ async function deploy(cName, P1)
 }
 
 
-async function deploy_wallet(MaxApprovals)
+async function deploy_contract(name, params)
 {
-	return await deploy("MultiUserWallet", MaxApprovals)
+	return await deploy("MultiUserWallet", params)
 }
 
 
-module.exports = { deploy_wallet }
+module.exports = { deploy_contract }

@@ -1,8 +1,7 @@
 const express =  require('express');
 const { init } = require('./eth.js');
-const net_url = "http://localnet:8545/"
 
-init(net_url)
+init()
 
 const app = express();
 
