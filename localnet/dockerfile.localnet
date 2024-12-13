@@ -1,0 +1,11 @@
+FROM node:18
+
+WORKDIR /local
+
+COPY package.json ./
+
+RUN npm install
+
+COPY hardhat.config.js ./
+
+CMD [ "npm", "run", "start" ]

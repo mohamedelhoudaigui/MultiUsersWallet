@@ -1,0 +1,15 @@
+services:
+  localnet:
+    ports:
+      - 8545:8545
+    build:
+      context: ./localnet
+      dockerfile: dockerfile.localnet
+  backend:
+    ports:
+      - 3000:3000
+    build:
+      context: ./backend
+      dockerfile: dockerfile.backend
+    depends_on:
+      - localnet

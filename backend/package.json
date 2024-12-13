@@ -1,0 +1,22 @@
+{
+  "name": "basic-solidity-project",
+  "version": "1.0.0",
+  "description": "Basic Solidity and Node.js project",
+  "main": "scripts/deploy.js",
+  "type": "commonjs",
+  "scripts": {
+    "test_sol": "npx hardhat test",
+    "compile_sol": "npx hardhat compile",
+    "deploy_sol": "npx hardhat run ./scripts/deploy.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "latest",
+    "@openzeppelin/contracts": "latest",
+    "hardhat": "latest",
+    "web3": "latest",
+    "express": "latest",
+    "ethers": "latest"
+
+  }
+}

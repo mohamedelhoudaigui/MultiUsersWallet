@@ -1,3 +1,5 @@
+const { ethers } = require('hardhat');
+
 async function deploy(cName, P1)
 {
 	const C = await ethers.getContractFactory(cName);
@@ -5,18 +7,14 @@ async function deploy(cName, P1)
 	const c = await C.deploy(P1);
 	await c.waitForDeployment();
 	console.log(cName + " deployed to: ", await c.getAddress());
+	return await c.getAddress()
 }
 
 
-async function main()
+async function deploy_wallet(MaxApprovals)
 {
-	let	MaxApprovals = 2;
-	await deploy("MultiUserWallet", MaxApprovals)
+	return await deploy("MultiUserWallet", MaxApprovals)
 }
-  
-main()
-.then(() => process.exit(0))
-.catch((error) => {
-	console.error(error);
-	process.exit(1);
-});
+
+
+module.exports = { deploy_wallet }
