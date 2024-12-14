@@ -4,6 +4,5 @@ node_modules
 package-lock.json
 __pycache__
 .env
-compiled_sol
 .vscode
 .DS_Store

@@ -1,32 +1,32 @@
 all_up:
-	docker-compose up --build
+	docker compose up --build
 
 all_dwn:
-	docker-compose down
+	docker compose down
 
 all_bl:
-	docker-compose build --no-cache
+	docker compose build --no-cache
 
 bup:
-	docker-compose up backend
+	docker compose up backend
 
 bdwn:
-	docker-compose down backend
+	docker compose down backend
 
 bbld:
-	docker-compose build backend
+	docker compose build backend
 
 lup:
-	docker-compose up localnet
+	docker compose up localnet
 
 ldwn:
-	docker-compose down localnet
+	docker compose down localnet
 
 lbld:
-	docker-compose build localnet
+	docker compose build localnet
 
 ps:
-	docker-compose ps
+	docker compose ps
 
 log:
-	docker-compose logs
+	docker compose logs
