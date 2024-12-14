@@ -7,9 +7,13 @@ services:
       dockerfile: dockerfile.localnet
   backend:
     ports:
-      - 3000:3000
+      - 5000:5000
     build:
       context: ./backend
       dockerfile: dockerfile.backend
     depends_on:
       - localnet
+    volumes:
+      - ./backend:/srcs
+      - /srcs/node_modules
+

@@ -1,16 +1,32 @@
-dup:
-	docker-compose up --build -d
+all_up:
+	docker-compose up --build
 
-dwn:
+all_dwn:
 	docker-compose down
 
-dbl:
+all_bl:
 	docker-compose build --no-cache
 
-dps:
-	docker-compose ps
+bup:
+	docker-compose up backend
 
-re: dwn dbl dup
+bdwn:
+	docker-compose down backend
+
+bbld:
+	docker-compose build backend
+
+lup:
+	docker-compose up localnet
+
+ldwn:
+	docker-compose down localnet
+
+lbld:
+	docker-compose build localnet
+
+ps:
+	docker-compose ps
 
 log:
 	docker-compose logs

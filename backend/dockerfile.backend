@@ -1,14 +1,11 @@
-FROM node:18
+FROM python:latest
 
 WORKDIR /srcs
 
-COPY package.json /srcs/
+# Copy only requirements.txt first
+COPY requirements.txt /srcs/
 
-RUN npm i
+RUN pip install -r requirements.txt
 
-COPY . /srcs/
-
-RUN npm run compile_sol
-
-
-CMD [ "npm", "run", "start" ]
+# For Python, we typically use python instead of npm
+CMD ["python", "app.py"]
