@@ -16,6 +16,8 @@ contract	MultiUserWallet is IMultiUserWallet
 	mapping (uint256 => Transaction)				Transactions;
 	mapping (uint256 => mapping(address => bool))	ApprMap;
 
+	// constructor:
+
 	constructor (uint256 _Req_Apprv) IMultiUserWallet()
 	{
 		NC_Owners = 1;
@@ -78,17 +80,21 @@ contract	MultiUserWallet is IMultiUserWallet
 	function	AddUser(address NewUser) external
 		CheckIsOwner()
 		CheckAddress(NewUser)
-	override
+		override
+	returns(bool)
 	{
+		if (IsOwner[NewUser] == true)
+			return false;
 		IsOwner[NewUser] = true;
 		NC_Owners++;
 
 		emit UserAdded(NewUser);
+		return true;
 	}
 
 	function	IsUser(address User) external view
 		CheckAddress(User)
-	override
+		override
 	returns (bool)
 	{
 		return (IsOwner[User]);
@@ -98,7 +104,7 @@ contract	MultiUserWallet is IMultiUserWallet
 	function	SubmitTransaction(address _to, uint256 _value, bytes memory _data) external
 		CheckIsOwner()
 		CheckAddress(_to)
-	override
+		override
 	{
 		Transaction memory NewTransaction = Transaction({
 			from: msg.sender,
@@ -129,7 +135,7 @@ contract	MultiUserWallet is IMultiUserWallet
 		CheckTransactionExist(TxId)
 		CheckApprovedBy(TxId, msg.sender)
 		CheckExecuted(TxId)
-	override
+		override
 	{
 		Transaction storage T =  Transactions[TxId];
 		T.approvals++;
@@ -146,7 +152,7 @@ contract	MultiUserWallet is IMultiUserWallet
 		CheckApproved(TxId)
 		CheckExecuted(TxId)
 		CheckExecBalance(TxId)
-	override
+		override
 	{
 		Transaction storage T =  Transactions[TxId];
 		T.executed = true;
@@ -158,7 +164,7 @@ contract	MultiUserWallet is IMultiUserWallet
 
 	function GetTransaction(uint256 TxId) external view
         CheckTransactionExist(TxId)
-	override
+		override
 	returns (
 		address from,
 		address to,

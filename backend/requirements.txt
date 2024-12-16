@@ -1,4 +1,0 @@
-web3
-Flask
-pytest
-py-solc-x

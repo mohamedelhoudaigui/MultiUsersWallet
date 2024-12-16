@@ -1,68 +1,46 @@
 from solcx import compile_standard
-import json
+import json, os
 
-def compile_solidity(source_path, name):
-    """
-    Compile a Solidity source file and return the compilation output
-    
-    Args:
-        source_path (str): Path to the .sol file
-    
-    Returns:
-        dict: Compiled contract data
-    """
-    # Read the Solidity source code
-    with open(source_path, 'r') as file:
-        source_code = file.read()
-    
-    # Compile the contract
-    compiled_sol = compile_standard(
-        {
-            "language": "Solidity",
-            "sources": {
-                source_path: {
-                    "content": source_code
-                }
-            },
-            "settings": {
-                "outputSelection": {
-                    "*": {
-                        "*": [
-                            "abi",
-                            "metadata",
-                            "evm.bytecode",
-                            "evm.sourceMap"
-                        ]
+def compile_solidity(source_dir, sol_version):
+    try:
+        sources = {}
+        for filename in os.listdir(source_dir):
+            if filename.endswith('.sol'):
+                filepath = os.path.join(source_dir, filename)
+                with open(filepath, 'r') as file:
+                    sources[filename] = {
+                        "content": file.read()
+                    }
+        
+        compiled_sol = compile_standard(
+            {
+                "language": "Solidity",
+                "sources": sources,
+                "settings": {
+                    "outputSelection": {
+                        "*": {
+                            "*": ["abi", "evm.bytecode"]
+                        }
                     }
                 }
-            }
-        },
-        solc_version="0.8.20"
-    )
+            },
+            solc_version=sol_version
+        )
     
-    # Save the compilation output
-    with open('./compiled_sol/' + name + '.json', 'w') as file:
-        json.dump(compiled_sol, file)
-    
-    return compiled_sol
+        print("-----------compiled successfully-----------------")
+        return compiled_sol
+
+    except Exception as e:
+        print(f"Compilation error: {e}")
 
 # Get contract binary and ABI
-def get_contract_data(compiled_sol, contract_name, contract_path):
-    """
-    Extract contract bytecode and ABI from compiled data
-    
-    Args:
-        compiled_sol (dict): Compiled contract data
-        contract_name (str): Name of the contract
-        source_path (str): Path to the source file
-        
-    Returns:
-        tuple: (bytecode, abi)
-    """
-    # Get bytecode
-    bytecode = compiled_sol['contracts'][contract_path][contract_name]['evm']['bytecode']['object']
-    
-    # Get ABI
-    abi = compiled_sol['contracts'][contract_path][contract_name]['abi']
-    
-    return bytecode, abi
+def get_contract_data(compiled_sol, contract_name):
+    for source_file in compiled_sol["contracts"]:
+        if contract_name in compiled_sol["contracts"][source_file]:
+            contract_interface = compiled_sol["contracts"][source_file][contract_name]
+            
+            bytecode = contract_interface["evm"]["bytecode"]["object"]
+            abi = contract_interface["abi"]
+            print("-----------abi and bytecode getted successfully-----------------")
+            return abi, bytecode
+    return None, None

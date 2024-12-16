@@ -1,11 +1,7 @@
 FROM python:latest
 
-WORKDIR /srcs
+WORKDIR /app
 
-# Copy only requirements.txt first
-COPY requirements.txt /srcs/
+RUN pip install web3 flask pytest py-solc-x
 
-RUN pip install -r requirements.txt
-
-# For Python, we typically use python instead of npm
-CMD ["python", "app.py"]
+CMD [ "python" , "app.py"]

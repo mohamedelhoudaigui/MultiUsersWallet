@@ -8,12 +8,9 @@ services:
   backend:
     ports:
       - 5000:5000
+
     build:
       context: ./backend
       dockerfile: dockerfile.backend
-    depends_on:
-      - localnet
     volumes:
-      - ./backend:/srcs
-      - /srcs/node_modules
-
+      - ./backend:/app  # Consider using '/app' as standard convention

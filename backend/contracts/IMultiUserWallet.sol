@@ -23,7 +23,7 @@ interface IMultiUserWallet {
     event TransactionExecuted(uint256 indexed TxId);
 
 	//user management :
-	function	AddUser(address NewUser) external;
+	function	AddUser(address NewUser) external returns(bool);
 	function	IsUser(address User) external view returns(bool);
 
 	//transaction management:
@@ -42,5 +42,4 @@ interface IMultiUserWallet {
 		uint256 approvals,
 		uint256 timestamp
 	);
-
 }

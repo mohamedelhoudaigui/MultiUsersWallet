@@ -1,15 +1,34 @@
-# app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request
 import os
-from scripts.entry import init
 
-init()
+from scripts.entry import init
+from scripts.route import route_handling
+
+
+interactor = init()
+
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def test():
-    return jsonify({'test': true})
+@app.route('/api/IsUser', methods=['GET'])
+def IsUser():
+    query = request.args.get('query')
+    return route_handling(query, interactor.is_user)
+
+@app.route('/api/AddUser', methods=['GET'])
+def AddUser():
+    query = request.args.get('query')
+    return route_handling(query, interactor.add_user)
+
+@app.route('/api/GetTr', methods=['GET'])
+def GetTransaction():
+    query = request.args.get('query')
+    try:
+        query = int(query)
+    except:
+        query = -1
+    return route_handling(query, interactor.get_transaction)
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
